@@ -6,16 +6,20 @@ A bookmark manager is a website to maintain a collection of bookmarks (URLs). Yo
 
 ```
 As a user
-So I can stay organized 
+So I can stay organized
 I want to see a list of bookmarks
 
 ```
-* Domain Model 
+## Domain Model
 
 Client --> get request --> Controller(app.rb)
 Controller --> Bookmark.all --> Model
 Model --> [bookmarks] ---> Controller
 Controller --> [bookmarks] --> View(.erb)
 View --> html --> Controller
-Controller --> response --> Client 
+Controller --> response --> Client
 
+<!-- Connect to psql
+Create the database using the psql command CREATE DATABASE bookmark_manager;
+Connect to the database using the pqsl command \c bookmark_manager;
+Run the query we have saved in the file 01_create_bookmarks_table.sql -->
