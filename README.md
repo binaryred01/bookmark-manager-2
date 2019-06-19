@@ -9,6 +9,10 @@ As a user
 So I can stay organized
 I want to see a list of bookmarks
 
+As a user
+So I can stay organised
+I want to add bookmarks to my list
+
 ```
 ## Domain Model
 
