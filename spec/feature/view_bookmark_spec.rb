@@ -9,14 +9,14 @@ RSpec.feature 'Testing bookmark', :type => :feature do
 
   scenario 'viewing bookmarks' do
 
-    Bookmark.create(url:'http://www.makersacademy.com')
-    Bookmark.create(url:'http://www.destroyallsoftware.com')
-    Bookmark.create(url:'http://www.google.com')
+    Bookmark.create(url:'http://www.makersacademy.com', title: 'Makers')
+    Bookmark.create(url:'http://www.destroyallsoftware.com', title: 'Destroy')
+    Bookmark.create(url:'http://www.google.com', title: 'Google')
 
     visit '/bookmarks'
     
-    expect(page).to have_content "http://www.makersacademy.com"
-    expect(page).to have_content "http://www.destroyallsoftware.com"
-    expect(page).to have_content "http://www.google.com"
+    expect(page).to have_content "Makers"
+    expect(page).to have_content "Destroy"
+    expect(page).to have_content "Google"
   end
 end
