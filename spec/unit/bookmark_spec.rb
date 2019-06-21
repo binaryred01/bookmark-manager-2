@@ -1,24 +1,34 @@
 require './lib/bookmark.rb'
+require './spec/database_helpers'
 
 describe Bookmark do
   describe '.all' do
     it 'returns a list of bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
+      
+      bookmark = Bookmark.create(url: "http://www.makersacademy.com", title: "Makers")
+      Bookmark.create(url: "http://www.destroyallsoftware.com", title: "Destroy All Software")
+      Bookmark.create(url: "http://www.google.com", title: "Google")
 
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES('Makers', 'http://www.makersacademy.com');")
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES('Destroy', 'http://www.destroyallsoftware.com');")
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES('Google', 'http://www.google.com');")
+      bookmarks = Bookmark.all
 
-      expect(Bookmark.all).to include("Makers")
-      expect(Bookmark.all).to include("Google")
-      expect(Bookmark.all).to include("Destroy")
+      expect(bookmarks.length).to eq 3
+      expect(bookmarks.first).to be_a Bookmark
+      expect(bookmarks.first.id).to eq bookmark.id
+      expect(bookmarks.first.title).to eq 'Makers'
+      expect(bookmarks.first.url).to eq 'http://www.makersacademy.com'
     end
   end
 
   describe '.create' do
     it 'creates a new bookmark' do
-      Bookmark.create(url: 'http://www.yahoo.com', title: 'Yahoo')
-      expect(Bookmark.all).to include('Yahoo')
+      bookmark = Bookmark.create(url: 'http://www.yahoo.com', title: 'Yahoo!')
+      persisted_data = persisted_data(id: bookmark.id)
+
+      expect(bookmark).to be_a Bookmark
+      expect(bookmark.id).to eq persisted_data['id']
+      expect(bookmark.title).to eq 'Yahoo!'
+      expect(bookmark.url).to eq 'http://www.yahoo.com'
     end
   end
 end
